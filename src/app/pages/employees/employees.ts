@@ -33,19 +33,22 @@ export class Employees {
       return;
     }
 
-    const newEmployee = {
-      id: Date.now(),
-
+    const employee = {
+      id: this.editingEmployeeId ?? Date.now(),
       name: this.employeeForm.value.name!,
-
       department: this.employeeForm.value.department!,
-
       salary: this.employeeForm.value.salary!,
     };
 
-    this.employeeService.addEmployee(newEmployee);
+    if (this.editingEmployeeId === null) {
+      this.employeeService.addEmployee(employee);
+    } else {
+      this.employeeService.updateEmployee(employee);
+    }
 
     this.employeeForm.reset();
+
+    this.editingEmployeeId = null;
   }
 
   editingEmployeeId: number | null = null;
@@ -56,5 +59,13 @@ export class Employees {
       department: employee.department,
       salary: employee.salary,
     });
+  }
+
+  deleteEmployee(id: number) {
+    const confirmed = confirm('Are you sure you want to delete this employee?');
+    if (!confirmed) {
+      return;
+    }
+    this.employeeService.deleteEmployee(id);
   }
 }

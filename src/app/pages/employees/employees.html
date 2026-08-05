@@ -113,7 +113,13 @@
                 ✏️
               </button>
 
-              <button type="button" class="delete-btn">🗑️</button>
+              <button
+                type="button"
+                class="delete-btn"
+                (click)="deleteEmployee(employee.id)"
+              >
+                🗑️
+              </button>
             </td>
           </tr>
         } @empty {

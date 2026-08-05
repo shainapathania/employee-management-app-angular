@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Employee } from '../models/employee';
+import { HttpClient } from '@angular/common/http';
+import { inject } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +28,23 @@ export class EmployeeService {
     },
   ]);
 
+  private http = inject(HttpClient);
   addEmployee(employee: Employee) {
     this.employees.update((currentEmployees) => [
       ...currentEmployees,
       employee,
     ]);
+  }
+  updateEmployee(updatedEmployee: Employee) {
+    this.employees.update((currentEmployees) =>
+      currentEmployees.map((employee) =>
+        employee.id === updatedEmployee.id ? updatedEmployee : employee,
+      ),
+    );
+  }
+  deleteEmployee(id: number) {
+    this.employees.update((currentEmployees) =>
+      currentEmployees.filter((employee) => employee.id !== id),
+    );
   }
 }
