@@ -1,0 +1,18 @@
+<nav>
+  <a
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Home
+  </a>
+  @if (!auth.isLoggedIn()) {
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+  }
+  <a routerLink="/profile" routerLinkActive="active">Profile</a>
+  @if (auth.isLoggedIn()) {
+    <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/employees" routerLinkActive="active">Employees</a>
+    <button (click)="logout()">Logout</button>
+  }
+</nav>

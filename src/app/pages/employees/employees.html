@@ -1,0 +1,127 @@
+<div class="employee-container">
+  <div class="header">
+    <h2>Employee Management</h2>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <!-- Name -->
+      <input type="text" placeholder="Employee Name" formControlName="name" />
+
+      @if (
+        employeeForm.controls.name.touched &&
+        employeeForm.controls.name.errors?.["required"]
+      ) {
+        <small>Name is required</small>
+      }
+
+      @if (
+        employeeForm.controls.name.touched &&
+        employeeForm.controls.name.errors?.["minlength"]
+      ) {
+        <small>Name must be at least 3 characters.</small>
+      }
+
+      @if (
+        employeeForm.controls.name.touched &&
+        employeeForm.controls.name.errors?.["maxlength"]
+      ) {
+        <small>Name must contain up to 20 characters.</small>
+      }
+
+      <!-- Department -->
+      <select formControlName="department">
+        <option value="">Select Department</option>
+
+        @for (department of departments; track department) {
+          <option [value]="department">
+            {{ department }}
+          </option>
+        }
+      </select>
+
+      @if (
+        employeeForm.controls.department.touched &&
+        employeeForm.controls.department.errors?.["required"]
+      ) {
+        <small>Please select a department.</small>
+      }
+
+      <!-- Salary -->
+      <input
+        type="number"
+        placeholder="Salary"
+        formControlName="salary"
+        min="1000"
+        max="500000"
+      />
+
+      @if (
+        employeeForm.controls.salary.touched &&
+        employeeForm.controls.salary.errors?.["required"]
+      ) {
+        <small>Salary is required.</small>
+      }
+
+      @if (
+        employeeForm.controls.salary.touched &&
+        employeeForm.controls.salary.errors?.["min"]
+      ) {
+        <small>Minimum salary is ₹1,000.</small>
+      }
+
+      @if (
+        employeeForm.controls.salary.touched &&
+        employeeForm.controls.salary.errors?.["max"]
+      ) {
+        <small>Maximum salary is ₹5,00,000.</small>
+      }
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="employeeForm.invalid">
+        {{ editingEmployeeId === null ? "Add Employee" : "Update Employee" }}
+      </button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Department</th>
+          <th>Salary</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (employee of employeeService.employees(); track employee.id) {
+          <tr>
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.department }}</td>
+            <td>{{ employee.salary | currency: "INR" }}</td>
+
+            <td>
+              <button
+                type="button"
+                class="edit-btn"
+                (click)="editEmployee(employee)"
+              >
+                ✏️
+              </button>
+
+              <button type="button" class="delete-btn">🗑️</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty">No employees found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
