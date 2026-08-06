@@ -1,22 +1,29 @@
 {
   "employees": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John",
       "department": "IT",
       "salary": 50000
     },
     {
-      "id": 2,
-      "name": "Sam",
+      "id": "2",
+      "name": "Samira",
       "department": "HR",
-      "salary": 45000
+      "salary": 49000
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Samuel",
       "department": "Marketing",
-      "salary": 55000
+      "salary": 56000
+    },
+    {
+      "name": "Harry",
+      "department": "IT",
+      "salary": 60000,
+      "id": "6HN7jmyX178"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

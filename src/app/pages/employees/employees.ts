@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EmployeeService } from '../../services/employee';
 import { CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -10,9 +10,14 @@ import { Employee } from '../../models/employee';
   templateUrl: './employees.html',
   styleUrl: './employees.css',
 })
-export class Employees {
+export class Employees implements OnInit {
   employeeService = inject(EmployeeService);
   fb = inject(FormBuilder);
+
+  ngOnInit(): void {
+    this.employeeService.loadEmployees();
+  }
+
   departments = ['IT', 'HR', 'Finance', 'Sales', 'Marketing'];
 
   employeeForm = this.fb.group({
@@ -33,25 +38,27 @@ export class Employees {
       return;
     }
 
-    const employee = {
-      id: this.editingEmployeeId ?? Date.now(),
-      name: this.employeeForm.value.name!,
-      department: this.employeeForm.value.department!,
-      salary: this.employeeForm.value.salary!,
-    };
-
     if (this.editingEmployeeId === null) {
+      const employee = {
+        name: this.employeeForm.value.name!,
+        department: this.employeeForm.value.department!,
+        salary: this.employeeForm.value.salary!,
+      };
+
       this.employeeService.addEmployee(employee);
     } else {
+      const employee = {
+        id: this.editingEmployeeId,
+        name: this.employeeForm.value.name!,
+        department: this.employeeForm.value.department!,
+        salary: this.employeeForm.value.salary!,
+      };
+
       this.employeeService.updateEmployee(employee);
     }
-
-    this.employeeForm.reset();
-
-    this.editingEmployeeId = null;
   }
 
-  editingEmployeeId: number | null = null;
+  editingEmployeeId: string | null = null;
   editEmployee(employee: Employee) {
     this.editingEmployeeId = employee.id;
     this.employeeForm.patchValue({
@@ -61,7 +68,7 @@ export class Employees {
     });
   }
 
-  deleteEmployee(id: number) {
+  deleteEmployee(id: string) {
     const confirmed = confirm('Are you sure you want to delete this employee?');
     if (!confirmed) {
       return;
