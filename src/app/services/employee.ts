@@ -54,42 +54,28 @@ export class EmployeeService {
 
   //Get method
   loadEmployees() {
-    this.http
-      .get<Employee[]>(`${environment.apiUrl}/employees`)
-      .subscribe((employees) => {
-        this.employees.set(employees);
-      });
+    return this.http.get<Employee[]>(`${environment.apiUrl}/employees`);
   }
 
   //post method
   addEmployee(employee: CreateEmployee) {
-    this.http
-      .post<Employee>(`${environment.apiUrl}/employees`, employee)
-      .subscribe((savedEmployee) => {
-        this.employees.update((current) => [...current, savedEmployee]);
-      });
+    return this.http.post<Employee>(
+      `${environment.apiUrl}/employees`,
+      employee,
+    );
   }
 
   //put method
   updateEmployee(employee: Employee) {
-    this.http
-      .put<Employee>(`${environment.apiUrl}/employees/${employee.id}`, employee)
-      .subscribe((updatedEmployee) => {
-        this.employees.update((current) =>
-          current.map((emp) =>
-            emp.id === updatedEmployee.id ? updatedEmployee : emp,
-          ),
-        );
-      });
+    return this.http.put<Employee>(
+      `${environment.apiUrl}/employees/${employee.id}`,
+      employee,
+    );
   }
 
   //delete method
 
   deleteEmployee(id: string) {
-    this.http.delete(`${environment.apiUrl}/employees/${id}`).subscribe(() => {
-      this.employees.update((current) =>
-        current.filter((employee) => employee.id !== id),
-      );
-    });
+    return this.http.delete(`${environment.apiUrl}/employees/${id}`);
   }
 }

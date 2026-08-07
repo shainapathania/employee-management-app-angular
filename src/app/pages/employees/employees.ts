@@ -11,11 +11,40 @@ import { Employee } from '../../models/employee';
   styleUrl: './employees.css',
 })
 export class Employees implements OnInit {
+  isLoading = false;
+  errorMessage = '';
+  successMessage = '';
   employeeService = inject(EmployeeService);
+
   fb = inject(FormBuilder);
 
-  ngOnInit(): void {
-    this.employeeService.loadEmployees();
+  showSuccessMessage(message: string) {
+    this.successMessage = message;
+
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 3000);
+  }
+
+  ngOnInit() {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.employeeService.loadEmployees().subscribe({
+      next: (employees) => {
+        this.employeeService.employees.set(employees);
+      },
+
+      error: (error) => {
+        console.error('Failed to load employees:', error);
+        this.errorMessage = 'Unable to load employees. Please try again.';
+        this.isLoading = false;
+      },
+
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   departments = ['IT', 'HR', 'Finance', 'Sales', 'Marketing'];
@@ -45,7 +74,31 @@ export class Employees implements OnInit {
         salary: this.employeeForm.value.salary!,
       };
 
-      this.employeeService.addEmployee(employee);
+      this.isLoading = true;
+      this.errorMessage = '';
+      this.successMessage = '';
+      //add
+      this.employeeService.addEmployee(employee).subscribe({
+        next: (savedEmployee) => {
+          this.employeeService.employees.update((current) => [
+            ...current,
+            savedEmployee,
+          ]);
+          //reset form
+          this.employeeForm.reset();
+
+          this.showSuccessMessage('Employee added successfully.');
+        },
+
+        error: (error) => {
+          console.error('Failed to add employee:', error);
+          this.errorMessage = 'Unable to add employee. Please try again.';
+        },
+
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
     } else {
       const employee = {
         id: this.editingEmployeeId,
@@ -54,7 +107,34 @@ export class Employees implements OnInit {
         salary: this.employeeForm.value.salary!,
       };
 
-      this.employeeService.updateEmployee(employee);
+      //update
+      this.isLoading = true;
+      this.errorMessage = '';
+      this.successMessage = '';
+
+      this.employeeService.updateEmployee(employee).subscribe({
+        next: (updatedEmployee) => {
+          this.employeeService.employees.update((current) =>
+            current.map((emp) =>
+              emp.id === updatedEmployee.id ? updatedEmployee : emp,
+            ),
+          );
+          //reset form
+          this.employeeForm.reset();
+          this.editingEmployeeId = null;
+
+          this.showSuccessMessage('Employee updated successfully.');
+        },
+
+        error: (error) => {
+          console.error('Failed to update employee:', error);
+          this.errorMessage = 'Unable to update employee. Please try again.';
+        },
+
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
     }
   }
 
@@ -69,10 +149,27 @@ export class Employees implements OnInit {
   }
 
   deleteEmployee(id: string) {
-    const confirmed = confirm('Are you sure you want to delete this employee?');
-    if (!confirmed) {
-      return;
-    }
-    this.employeeService.deleteEmployee(id);
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.employeeService.deleteEmployee(id).subscribe({
+      next: () => {
+        this.employeeService.employees.update((current) =>
+          current.filter((employee) => employee.id !== id),
+        );
+
+        this.showSuccessMessage('Employee deleted successfully.');
+      },
+
+      error: (error) => {
+        console.error('Failed to delete employee:', error);
+        this.errorMessage = 'Unable to delete employee. Please try again.';
+      },
+
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 }

@@ -85,6 +85,15 @@
   </div>
 
   <div class="table-container">
+    @if (isLoading) {
+      <p>Loading employees...</p>
+    }
+    @if (errorMessage) {
+      <p class="error-message">{{ errorMessage }}</p>
+    }
+    @if (successMessage) {
+      <p class="success-message">{{ successMessage }}</p>
+    }
     <table>
       <thead>
         <tr>

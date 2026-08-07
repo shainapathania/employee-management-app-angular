@@ -1,1 +1,48 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <h2>Employee Dashboard</h2>
+  <div class="stats">
+    <div class="stat-card">
+      <h3>Total employees</h3>
+      <p>{{ totalEmployees$ | async }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Departments</h3>
+      <p>0</p>
+    </div>
+    <div class="stat-card">
+      <h3>Average salary</h3>
+      <p>₹0</p>
+    </div>
+  </div>
+  <div class="search-section">
+    <input
+      type="text"
+      placeholder="search employee..."
+      (input)="onSearch($any($event.target).value)"
+    />
+
+    <select
+      [value]="selectedDepartment"
+      (change)="onDepartmentChange($any($event.target).value)"
+    >
+      <option value="">All department</option>
+      @for (department of departments; track department) {
+        <option [value]="department">
+          {{ department }}
+        </option>
+      }
+    </select>
+  </div>
+  <div class="employee-list">
+    <h3>Employee</h3>
+    @for (employee of filteredEmployees$ | async; track employee.id) {
+      <div class="employee-item">
+        <strong>{{ employee.name }}</strong>
+        <span>{{ employee.department }}</span>
+        <span>{{ employee.salary | currency: "INR" }}</span>
+      </div>
+    } @empty {
+      <p>No employees found</p>
+    }
+  </div>
+</div>

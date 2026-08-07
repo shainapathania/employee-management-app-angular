@@ -1,12 +1,6 @@
 {
   "employees": [
     {
-      "id": "1",
-      "name": "John",
-      "department": "IT",
-      "salary": 50000
-    },
-    {
       "id": "2",
       "name": "Samira",
       "department": "HR",
@@ -23,6 +17,54 @@
       "department": "IT",
       "salary": 60000,
       "id": "6HN7jmyX178"
+    },
+    {
+      "name": "Ron",
+      "department": "Finance",
+      "salary": 44000,
+      "id": "6ZLGnjzwGQg"
+    },
+    {
+      "id": "mQAlyinFcBI",
+      "name": "Minerva",
+      "department": "Sales",
+      "salary": 63000
+    },
+    {
+      "id": "vQSVhqkN1dQ",
+      "name": "Dumbledore",
+      "department": "HR",
+      "salary": 66000
+    },
+    {
+      "name": "naville",
+      "department": "Finance",
+      "salary": 55555,
+      "id": "oFU2EumgTRo"
+    },
+    {
+      "name": "draco",
+      "department": "Sales",
+      "salary": 33333,
+      "id": "m3SzwGg-lT4"
+    },
+    {
+      "name": "Harmoine",
+      "department": "Sales",
+      "salary": 44444,
+      "id": "fkqv09tdNj4"
+    },
+    {
+      "name": "Sirius",
+      "department": "Marketing",
+      "salary": 56665,
+      "id": "PDvCdc-ny60"
+    },
+    {
+      "name": "Luna",
+      "department": "Sales",
+      "salary": 66666,
+      "id": "Ko7jU6QQKuw"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
