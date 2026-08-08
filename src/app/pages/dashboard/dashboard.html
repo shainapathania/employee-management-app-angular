@@ -1,5 +1,14 @@
 <div class="dashboard-container">
   <h2>Employee Dashboard</h2>
+
+  @if (loading) {
+    <p class="loading-message">Loading employees...</p>
+  }
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
   <div class="stats">
     <div class="stat-card">
       <h3>Total employees</h3>
@@ -7,11 +16,11 @@
     </div>
     <div class="stat-card">
       <h3>Total Departments</h3>
-      <p>0</p>
+      <p>{{ totalDepartments$ | async }}</p>
     </div>
     <div class="stat-card">
       <h3>Average salary</h3>
-      <p>₹0</p>
+      <p>{{ averageSalary$ | async | currency: "INR" }}</p>
     </div>
   </div>
   <div class="search-section">

@@ -65,6 +65,18 @@
       "department": "Sales",
       "salary": 66666,
       "id": "Ko7jU6QQKuw"
+    },
+    {
+      "name": "lucious",
+      "department": "Finance",
+      "salary": 70000,
+      "id": "ZXu_qSG8T9A"
+    },
+    {
+      "name": "Parvati",
+      "department": "IT",
+      "salary": 66555,
+      "id": "aMlxRgoMMAM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

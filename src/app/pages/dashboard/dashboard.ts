@@ -9,6 +9,11 @@ import {
   debounceTime,
   distinctUntilChanged,
   combineLatest,
+  catchError,
+  of,
+  tap,
+  finalize,
+  shareReplay,
 } from 'rxjs';
 
 @Component({
@@ -22,6 +27,10 @@ export class Dashboard {
 
   selectedDepartment = '';
 
+  errorMessage = '';
+
+  loading = true;
+
   departments = ['IT', 'HR', 'Finance', 'Sales', 'Marketing'];
 
   departmentSubject = new Subject<string>();
@@ -34,7 +43,21 @@ export class Dashboard {
     distinctUntilChanged(),
   );
 
-  employees$ = this.employeeService.loadEmployees();
+  employees$ = this.employeeService.loadEmployees().pipe(
+    tap(() => {
+      console.log('loading employees');
+    }),
+    catchError((error) => {
+      console.error('Failed to load employees: ', error);
+      this.errorMessage = 'Unable to load employees. Please try again later.';
+      return of([]);
+    }),
+    finalize(() => {
+      this.loading = false;
+    }),
+    shareReplay(1),
+  );
+
   totalEmployees$ = this.employees$.pipe(map((employees) => employees.length));
 
   filteredEmployees$ = combineLatest([
@@ -57,6 +80,28 @@ export class Dashboard {
         ),
       ),
     ),
+  );
+
+  totalDepartments$ = this.employees$.pipe(
+    map((employees) => {
+      const departments = new Set(
+        employees.map((employee) => employee.department),
+      );
+      return departments.size;
+    }),
+  );
+
+  averageSalary$ = this.employees$.pipe(
+    map((employees) => {
+      if (employees.length === 0) {
+        return 0;
+      }
+      const totalSalary = employees.reduce(
+        (total, employee) => total + employee.salary,
+        0,
+      );
+      return totalSalary / employees.length;
+    }),
   );
 
   onDepartmentChange(department: string) {
