@@ -77,6 +77,12 @@
       "department": "IT",
       "salary": 66555,
       "id": "aMlxRgoMMAM"
+    },
+    {
+      "name": "narcissa",
+      "department": "Marketing",
+      "salary": 54044,
+      "id": "1oEU0jWjxcU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -109,4 +109,20 @@ describe('Employee', () => {
 
     request.flush({ success: true });
   });
+
+  it('should handle server error', () => {
+    service.loadEmployees().subscribe({
+      next: () => {
+        fail('Expected an error, but got successful response');
+      },
+      error: (error) => {
+        expect(error.status).toBe(500);
+      },
+    });
+    const request = httpTesting.expectOne(`${environment.apiUrl}/employees`);
+    request.flush('something went wrong', {
+      status: 500,
+      statusText: 'Server Error',
+    });
+  });
 });

@@ -3,6 +3,7 @@ import { EmployeeService } from '../../services/employee';
 import { CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../../models/employee';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -15,6 +16,7 @@ export class Employees implements OnInit {
   errorMessage = '';
   successMessage = '';
   employeeService = inject(EmployeeService);
+  router = inject(Router);
 
   fb = inject(FormBuilder);
 
@@ -171,5 +173,9 @@ export class Employees implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  viewEmployee(id: string) {
+    this.router.navigate(['/profile', id]);
   }
 }

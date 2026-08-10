@@ -78,4 +78,8 @@ export class EmployeeService {
   deleteEmployee(id: string) {
     return this.http.delete(`${environment.apiUrl}/employees/${id}`);
   }
+
+  getEmployeeById(id: string) {
+    return this.http.get<Employee>(`${environment.apiUrl}/employees/${id}`);
+  }
 }

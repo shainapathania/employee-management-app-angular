@@ -12,6 +12,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'employees', component: Employees },
-  { path: 'profile', component: Profile },
+  { path: 'profile/:id', component: Profile },
+
   { path: '**', component: NotFound },
 ];

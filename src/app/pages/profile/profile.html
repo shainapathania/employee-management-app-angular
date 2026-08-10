@@ -1,1 +1,24 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <h2>Employee Profile</h2>
+
+  <div class="profile-details">
+    <p>
+      <strong>Name:</strong>
+      {{ employee?.name }}
+    </p>
+
+    <p>
+      <strong>Department:</strong>
+      {{ employee?.department }}
+    </p>
+
+    <p>
+      <strong>Salary:</strong>
+      {{ employee?.salary }}
+    </p>
+  </div>
+
+  <button type="button" class="back-btn" (click)="goBack()">
+    Back to Employees
+  </button>
+</div>
