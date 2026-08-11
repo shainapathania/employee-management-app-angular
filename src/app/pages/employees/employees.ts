@@ -3,7 +3,7 @@ import { EmployeeService } from '../../services/employee';
 import { CurrencyPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Employee } from '../../models/employee';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -17,6 +17,7 @@ export class Employees implements OnInit {
   successMessage = '';
   employeeService = inject(EmployeeService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
   fb = inject(FormBuilder);
 
@@ -31,10 +32,18 @@ export class Employees implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.errorMessage = '';
+    const editId = this.route.snapshot.paramMap.get('id');
 
     this.employeeService.loadEmployees().subscribe({
       next: (employees) => {
         this.employeeService.employees.set(employees);
+
+        if (editId) {
+          const employee = employees.find((employee) => employee.id === editId);
+          if (employee) {
+            this.editEmployee(employee);
+          }
+        }
       },
 
       error: (error) => {

@@ -43,3 +43,13 @@
 .back-btn:hover {
   background: #555;
 }
+
+.edit-btn {
+  margin-top: 25px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #333;
+  color: white;
+}

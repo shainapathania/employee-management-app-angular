@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard, canActivate: [authGuard] },
   { path: 'employees', component: Employees },
   { path: 'profile/:id', component: Profile },
+  { path: 'employees/edit/:id', component: Employees },
 
   { path: '**', component: NotFound },
 ];

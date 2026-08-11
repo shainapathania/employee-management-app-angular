@@ -11,6 +11,7 @@ import { Employee } from '../../models/employee';
 })
 export class Profile {
   employee: Employee | null = null;
+
   route = inject(ActivatedRoute);
   router = inject(Router);
   employeeService = inject(EmployeeService);
@@ -25,5 +26,9 @@ export class Profile {
 
   goBack() {
     this.router.navigate(['/employees']);
+  }
+
+  editEmployee() {
+    this.router.navigate(['/employees/edit', this.employee?.id]);
   }
 }
