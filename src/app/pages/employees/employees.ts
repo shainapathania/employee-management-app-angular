@@ -135,6 +135,7 @@ export class Employees implements OnInit {
           this.editingEmployeeId = null;
 
           this.showSuccessMessage('Employee updated successfully.');
+          this.router.navigate(['/employees']);
         },
 
         error: (error) => {

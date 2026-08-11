@@ -1,22 +1,10 @@
 {
   "employees": [
     {
-      "id": "2",
-      "name": "Samira",
-      "department": "HR",
-      "salary": 49000
-    },
-    {
-      "id": "3",
-      "name": "Samuel",
-      "department": "Marketing",
-      "salary": 56099
-    },
-    {
+      "id": "6HN7jmyX178",
       "name": "Harry",
       "department": "IT",
-      "salary": 60000,
-      "id": "6HN7jmyX178"
+      "salary": 67000
     },
     {
       "name": "Ron",
@@ -28,7 +16,7 @@
       "id": "mQAlyinFcBI",
       "name": "Minerva",
       "department": "Sales",
-      "salary": 63000
+      "salary": 65000
     },
     {
       "id": "vQSVhqkN1dQ",
@@ -37,10 +25,10 @@
       "salary": 66000
     },
     {
+      "id": "oFU2EumgTRo",
       "name": "naville",
-      "department": "Finance",
-      "salary": 55555,
-      "id": "oFU2EumgTRo"
+      "department": "Sales",
+      "salary": 55000
     },
     {
       "name": "draco",
@@ -55,10 +43,10 @@
       "id": "fkqv09tdNj4"
     },
     {
+      "id": "PDvCdc-ny60",
       "name": "Sirius",
       "department": "Marketing",
-      "salary": 56665,
-      "id": "PDvCdc-ny60"
+      "salary": 56660
     },
     {
       "name": "Luna",
